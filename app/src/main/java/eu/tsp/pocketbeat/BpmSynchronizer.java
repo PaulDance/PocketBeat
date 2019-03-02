@@ -14,6 +14,7 @@ import java.util.ArrayList;
  * @author Paul Mabileau
  * @see #setBpm(int, Object)
  * @see MainActivity
+ * @version 0.1
  */
 public class BpmSynchronizer {
 	private final ArrayList<TextView> viewsArray;

@@ -22,6 +22,7 @@ import android.widget.ToggleButton;
  * @see BeatWorker
  * @see Settings
  * @author Paul Mabileau
+ * @version 0.2
  */
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 	

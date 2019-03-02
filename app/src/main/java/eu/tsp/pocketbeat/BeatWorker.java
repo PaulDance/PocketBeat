@@ -18,9 +18,11 @@ import static android.content.Context.VIBRATOR_SERVICE;
 /**
  * This class handles all the functionality of playing the sound and the vibration of the metronome
  * in rhythm. The frequency is adjusted with the BPM SeekBar object in the MainActivity.
+ *
  * @see SeekBar
  * @see MainActivity
  * @author Paul Mabileau
+ * @version 0.2
  */
 public class BeatWorker {               // A lot of code is commented out because of debugging. Please do not remove it for now.
 	private final Activity activity;

@@ -8,10 +8,12 @@ package eu.tsp.pocketbeat;
  * <b>bpmProgressIncrement</b>: the step size between two successive positions of the bpmBar.<br><br>
  * <b>delayBeforeBeat</b>: the number of milliseconds before the BeatWorker object starts the rhythm.<br>
  * <b>beatVibrationDuration</b>: the duration in milliseconds of the vibration of each beat.
+ *
  * @see MainActivity
  * @see android.widget.SeekBar
  * @see BeatWorker
  * @author Paul Mabileau
+ * @version 0.1
  */
 public final class Settings {
 	public final static int     bpmBarMin               =   40  ,
