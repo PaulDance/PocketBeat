@@ -30,18 +30,16 @@ public class BeatWorker {               // A lot of code is commented out becaus
 	//private boolean beatCompleted;
 	//private final SoundPool soundPool;
 	//private final int beatId;
-	private final SeekBar bpmBar;
+	private final BpmSynchronizer bpmSynchronizer;
 	
 	/**
 	 * Default constructor, requires the activity that started the object and the SeekBar that controls the BPM.
 	 * @param activity: The activity that calls this constructor, that is in order to access its services and context.
-	 * @param bpmBar: The SeekBar in MainActivity that controls the BPM of the metronome.
-	 * @see MainActivity
-	 * @see SeekBar
+	 * @param bpmSynchronizer: The {@link BpmSynchronizer} in {@link MainActivity} that records and helps synchronizing the BPM of the metronome.
 	 */
-	public BeatWorker(Activity activity, SeekBar bpmBar) {
+	public BeatWorker(Activity activity, BpmSynchronizer bpmSynchronizer) {
 		this.activity = activity;
-		this.bpmBar = bpmBar;
+		this.bpmSynchronizer = bpmSynchronizer;
 		this.vibrator = (Vibrator) this.activity.getSystemService(VIBRATOR_SERVICE);
 		//this.soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
 		//this.beatId = this.soundPool.load(this.activity.getApplicationContext(), R.raw.beat, 1);
@@ -84,7 +82,7 @@ public class BeatWorker {               // A lot of code is commented out becaus
 			public Void call() {
 				BeatWorker.this.beatSound();
 				BeatWorker.this.beatVibration();
-				BeatWorker.this.executorService.schedule(this, 60000L / (BeatWorker.this.bpmBar.getProgress() + Settings.bpmBarMin), TimeUnit.MILLISECONDS);
+				BeatWorker.this.executorService.schedule(this, 60000L / (BeatWorker.this.bpmSynchronizer.getBpm() + Settings.bpmBarMin), TimeUnit.MILLISECONDS);
 				return null;
 			}
 		}, Settings.delayBeforeBeat, TimeUnit.MILLISECONDS);
@@ -168,5 +166,10 @@ public class BeatWorker {               // A lot of code is commented out becaus
 		else {
 			this.vibrator.vibrate(Settings.beatVibrationDuration);
 		}
+	}
+	
+	@Override
+	protected void finalize() {
+		this.stop();
 	}
 }

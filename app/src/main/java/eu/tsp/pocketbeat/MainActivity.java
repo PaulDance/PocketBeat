@@ -33,18 +33,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		final TextView bpmView = this.findViewById(R.id.bpmView);
 		final SeekBar bpmBar = this.findViewById(R.id.bpmBar);
 		final ToggleButton toggleBpmButton = this.findViewById(R.id.toggleBpmButton);
-		final BeatWorker beatWorker = new BeatWorker(this, bpmBar);
+		final BpmSynchronizer bpmSynchronizer = new BpmSynchronizer();
+		final BeatWorker beatWorker = new BeatWorker(this, bpmSynchronizer);
 		
-		bpmBar.setProgress(Settings.bpmInitProgress);
 		bpmBar.setMax(Settings.bpmBarMax - Settings.bpmBarMin);
 		bpmBar.incrementProgressBy(Settings.bpmProgressIncrement);
-		bpmView.setText(Integer.toString(bpmBar.getProgress()) + " bpm");
+		
+		bpmSynchronizer.addTextView(bpmView);
+		bpmSynchronizer.addBar(bpmBar);
+		bpmSynchronizer.setBpm(Settings.bpmInitProgress);
 		
 		bpmBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 				if (fromUser) {
-					bpmView.setText(Integer.toString(progress + Settings.bpmBarMin) + " bpm");
+					bpmSynchronizer.setBpm(progress + Settings.bpmBarMin, bpmBar);
 				}
 			}
 			@Override public void onStartTrackingTouch(SeekBar seekBar) {}
@@ -62,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 				}
 			}
 		});
+		
 		
 		
 		//      ------------        Beyond this point is only automatically generated code          --------------
