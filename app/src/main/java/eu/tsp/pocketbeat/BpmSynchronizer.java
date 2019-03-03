@@ -75,7 +75,7 @@ public class BpmSynchronizer {
 		
 		for (ProgressBar bar: this.barsArray) {
 			if (!bar.equals(ignore)) {
-				bar.setProgress(bpm);
+				bar.setProgress(bpm - Settings.bpmBarMin);
 			}
 		}
 	}

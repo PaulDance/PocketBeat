@@ -84,7 +84,7 @@ public class BeatWorker {               // A lot of code is commented out becaus
 			public Void call() {
 				BeatWorker.this.beatSound();
 				BeatWorker.this.beatVibration();
-				BeatWorker.this.executorService.schedule(this, 60000L / (BeatWorker.this.bpmSynchronizer.getBpm() + Settings.bpmBarMin), TimeUnit.MILLISECONDS);
+				BeatWorker.this.executorService.schedule(this, 60000L / BeatWorker.this.bpmSynchronizer.getBpm(), TimeUnit.MILLISECONDS);
 				return null;
 			}
 		}, Settings.delayBeforeBeat, TimeUnit.MILLISECONDS);

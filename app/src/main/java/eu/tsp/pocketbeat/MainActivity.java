@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -22,7 +23,7 @@ import android.widget.ToggleButton;
  * @see BeatWorker
  * @see Settings
  * @author Paul Mabileau
- * @version 0.2
+ * @version 0.3
  */
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 	
@@ -31,45 +32,55 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_main);
 		
-		final TextView bpmView = this.findViewById(R.id.bpmView);
-		final SeekBar bpmBar = this.findViewById(R.id.bpmBar);
-		final ToggleButton toggleBpmButton = this.findViewById(R.id.toggleBpmButton);
-		final BpmSynchronizer bpmSynchronizer = new BpmSynchronizer();
-		final BeatWorker beatWorker = new BeatWorker(this, bpmSynchronizer);
+		final TextView bpmView = this.findViewById(R.id.bpmView);                           // The text view where the bpm number is displayed.
+		final SeekBar bpmBar = this.findViewById(R.id.bpmBar);                              // The bar used to seek the desired bpm.
+		final BpmSynchronizer bpmSynchronizer = new BpmSynchronizer();                      // The central way to set and get the current bpm.
+		final ButtonBpmGuesser buttonBpmGuesser = new ButtonBpmGuesser(bpmSynchronizer);    // The button beat detector.
+		final BeatWorker beatWorker = new BeatWorker(this, bpmSynchronizer);        // The worker playing the sound in rhythm in the background.
 		
-		bpmBar.setMax(Settings.bpmBarMax - Settings.bpmBarMin);
-		bpmBar.incrementProgressBy(Settings.bpmProgressIncrement);
+		bpmBar.setMax(Settings.bpmBarMax - Settings.bpmBarMin);                             // The wanted max of the bar is shifted, to simulate a min.
+		bpmBar.incrementProgressBy(Settings.bpmProgressIncrement);                          // Seems useless for now.
 		
-		bpmSynchronizer.addTextView(bpmView);
-		bpmSynchronizer.addBar(bpmBar);
-		bpmSynchronizer.setBpm(Settings.bpmInitProgress);
+		bpmSynchronizer.addTextView(bpmView);                                               // Record the different objects
+		bpmSynchronizer.addBar(bpmBar);                                                     // that need synchronization,
+		bpmSynchronizer.setBpm(Settings.bpmInitProgress);                                   // and set them all to have the initial bpm.
 		
-		bpmBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-			@Override
-			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-				if (fromUser) {
-					bpmSynchronizer.setBpm(progress + Settings.bpmBarMin, bpmBar);
+		bpmBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {           // When the bpm seek bar changed,
+			@Override public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+				if (fromUser) {                                                             // and the user did that,
+					buttonBpmGuesser.reset();                                               // reset the beat detector,
+					bpmSynchronizer.setBpm(progress + Settings.bpmBarMin, bpmBar);    // and synchronize the new bpm.
 				}
 			}
 			@Override public void onStartTrackingTouch(SeekBar seekBar) {}
 			@Override public void onStopTrackingTouch(SeekBar seekBar) {}
 		});
 		
+		final ToggleButton toggleBpmButton = this.findViewById(R.id.toggleBpmButton);       // The on/off beat control button.
 		toggleBpmButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (toggleBpmButton.getText().equals("ON")) {
-					beatWorker.start();
+			@Override public void onClick(View view) {                                      // When it is clicked,
+				if (toggleBpmButton.getText().equals("ON")) {                               // and it is 'on',
+					beatWorker.start();                                                     // start the beat,
 				}
 				else {
-					beatWorker.stop();
+					beatWorker.stop();                                                      // otherwise stop it;
 				}
+				buttonBpmGuesser.reset();                                                   // and in any case, reset the detector.
+			}
+		});
+		
+		final Button beatItButton = this.findViewById(R.id.beatItButton);                   // The button that makes the manual beat detection
+		beatItButton.setOnClickListener(buttonBpmGuesser);                                  // gets the associated bpm guesser.
+		
+		final Button resetGuesserButton = this.findViewById(R.id.resetGuesserButton);       // The button used to reset the beat guesser:
+		resetGuesserButton.setOnClickListener(new View.OnClickListener() {
+			@Override public void onClick(View v) {                                         // when clicked,
+				buttonBpmGuesser.reset();                                                   // reset the detector.
 			}
 		});
 		
 		
-		
-		//      ------------        Beyond this point is only automatically generated code          --------------
+		//      ------------        Beyond this point is only automatically generated code          --------------      //
 		Toolbar toolbar = this.findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 		
