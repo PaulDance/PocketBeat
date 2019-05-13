@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <SeekBar
+        android:id="@+id/bpmBar"
+        android:layout_width="279dp"
+        android:layout_height="29dp"
+        android:layout_marginStart="67dp"
+        android:layout_marginLeft="67dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="66dp"
+        android:layout_marginRight="66dp"
+        android:layout_marginBottom="11dp"
+        android:max="160"
+        android:progress="60" />
+
+    <TextView
+        android:id="@+id/bpmView"
+        android:layout_width="106dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="94dp"
+        android:layout_marginLeft="94dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="19dp"
+        android:fontFamily="casual"
+        android:gravity="right|center_vertical"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:typeface="normal" />
+
+    <ToggleButton
+        android:id="@+id/toggleBpmButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="161dp"
+        android:layout_marginLeft="161dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginEnd="162dp"
+        android:layout_marginRight="162dp"
+        android:layout_marginBottom="20dp"
+        android:textSize="18sp"
+        android:typeface="normal" />
+
+    <TextView
+        android:id="@+id/bpmText"
+        android:layout_width="75dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="100dp"
+        android:fontFamily="casual"
+        android:gravity="left|center_vertical"
+        android:text="BPM"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:typeface="normal" />
+
+    <Button
+        android:id="@+id/beatItButton"
+        android:layout_width="169dp"
+        android:layout_height="178dp"
+        android:layout_marginStart="121dp"
+        android:layout_marginLeft="121dp"
+        android:layout_marginTop="300dp"
+        android:layout_marginEnd="121dp"
+        android:layout_marginRight="121dp"
+        android:gravity="center"
+        android:text="Taper"
+        android:textSize="36sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/resetGuesserButton"
+        android:layout_width="127dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="147dp"
+        android:layout_marginLeft="147dp"
+        android:layout_marginTop="550dp"
+        android:layout_marginEnd="147dp"
+        android:layout_marginRight="147dp"
+        android:layout_marginBottom="4dp"
+        android:text="Réinitialiser" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="50dp" />
+</RelativeLayout>
