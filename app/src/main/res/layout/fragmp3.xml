@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="410dp"
-    android:layout_height="730dp"
-    android:background="#FFFFFF">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="420dp"
-        android:layout_height="730dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="Ici, vous pouvez importer une musique en format mp3 pour en déterminer le BPM."
-        android:textSize="24sp"
-        android:background="#FFFFFF" />
+        android:textSize="24sp" />
 
 </RelativeLayout>

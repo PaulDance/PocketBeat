@@ -7,7 +7,7 @@
         <item
             android:id="@+id/nav_vib"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="PocketBeat Master" />
+            android:title="PocketBeat" />
         <item
             android:id="@+id/nav_mic"
             android:icon="@drawable/ic_mic_none_black_24dp"
