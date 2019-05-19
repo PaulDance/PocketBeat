@@ -8,6 +8,8 @@
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
         android:text="Ici, vous pouvez importer une musique en format mp3 pour en déterminer le BPM."
         android:textSize="24sp" />
 
