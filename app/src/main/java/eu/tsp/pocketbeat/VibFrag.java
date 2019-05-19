@@ -17,7 +17,6 @@ public class VibFrag extends Fragment {
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//System.out.println(container.toString());
 		final View thisView = inflater.inflate(R.layout.fragvib, container, false);
 	
 		final TextView bpmView = thisView.findViewById(R.id.bpmView);						// The text view where the bpm number is displayed.
@@ -64,6 +63,18 @@ public class VibFrag extends Fragment {
 		resetGuesserButton.setOnClickListener(new View.OnClickListener() {
 			@Override public void onClick(View v) {											// when clicked,
 				buttonBpmGuesser.reset();													// reset the detector.
+			}
+		});
+		
+		final ToggleButton toggleSpeakerButton = thisView.findViewById(R.id.toggleSpeakerButton);
+		toggleSpeakerButton.setOnClickListener(new View.OnClickListener() {
+			@Override public void onClick(View v) {
+				if (toggleSpeakerButton.isChecked()) {
+					beatWorker.unmute();
+				}
+				else {
+					beatWorker.mute();
+				}
 			}
 		});
 		

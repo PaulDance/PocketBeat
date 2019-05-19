@@ -33,6 +33,7 @@ public class BeatWorker {               // A lot of code is commented out becaus
 	//private final SoundPool soundPool;
 	//private final int beatId;
 	private final BpmSynchronizer bpmSynchronizer;
+	private boolean soundMuted;
 	
 	/**
 	 * Default constructor, requires the activity that started the object and the SeekBar that controls the BPM.
@@ -40,6 +41,7 @@ public class BeatWorker {               // A lot of code is commented out becaus
 	 * @param bpmSynchronizer: The {@link BpmSynchronizer} in {@link MainActivity} that records and helps synchronizing the BPM of the metronome.
 	 */
 	public BeatWorker(Activity activity, BpmSynchronizer bpmSynchronizer) {
+		this.soundMuted = false;
 		this.activity = activity;
 		this.bpmSynchronizer = bpmSynchronizer;
 		this.vibrator = (Vibrator) this.activity.getSystemService(VIBRATOR_SERVICE);
@@ -106,55 +108,57 @@ public class BeatWorker {               // A lot of code is commented out becaus
 	 * Internal method that stores all the code to play the sound of the metronome "beat.ogg" once only.
 	 */
 	private void beatSound() {
-		//this.soundPool.play(this.beatId, 1, 0, 1, 1, 1);
-//		this.beatMediaPlayer.stop();
-		//this.beatMediaPlayer.reset();
-		//this.beatMediaPlayer.release();
-		this.beatMediaPlayer = MediaPlayer.create(this.activity.getApplicationContext(), R.raw.beat);
-		this.beatMediaPlayer.setVolume(1, 1);
-		this.beatMediaPlayer.setLooping(false);
-		this.beatMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-			@Override
-			public void onCompletion(MediaPlayer mediaPlayer) {
-				mediaPlayer.reset();
-				mediaPlayer.release();
-			}
-		});
-		this.beatMediaPlayer.start();
-		
-//		try {
-//			this.beatMediaPlayer.prepare();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		this.beatMediaPlayer.start();
-//		AssetFileDescriptor afd = this.activity.getApplicationContext().getResources().openRawResourceFd(R.raw.beat);
-//		if (afd == null) return;
-		//this.beatMediaPlayer.reset();
-		
-//		try {
-//			//this.beatMediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-//			//afd.close();
-//			this.beatMediaPlayer.setDataSource(this.activity.getApplicationContext(), Uri.parse("android.resource://com.my.package/" + R.raw.beat));
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		if (!this.soundMuted) {
+//			this.soundPool.play(this.beatId, 1, 0, 1, 1, 1);
+//			this.beatMediaPlayer.stop();
+//			this.beatMediaPlayer.reset();
+//			this.beatMediaPlayer.release();
+			this.beatMediaPlayer = MediaPlayer.create(this.activity.getApplicationContext(), R.raw.beat);
+			this.beatMediaPlayer.setVolume(1, 1);
+			this.beatMediaPlayer.setLooping(false);
+			this.beatMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+				@Override
+				public void onCompletion(MediaPlayer mediaPlayer) {
+					mediaPlayer.reset();
+					mediaPlayer.release();
+				}
+			});
+			this.beatMediaPlayer.start();
 
-//		if (this.beatCompleted) {
-//			this.beatCompleted = false;
-//			this.beatMediaPlayer.start();
-//		}
-//		else {
-//			this.beatMediaPlayer.prepareAsync();
-//			this.beatMediaPlayer.start();
 //			try {
 //				this.beatMediaPlayer.prepare();
-//				this.beatMediaPlayer.start();
 //			} catch (IOException e) {
-//				System.out.println("nok prepare");
 //				e.printStackTrace();
 //			}
-//		}
+//			this.beatMediaPlayer.start();
+//			AssetFileDescriptor afd = this.activity.getApplicationContext().getResources().openRawResourceFd(R.raw.beat);
+//			if (afd == null) return;
+//				this.beatMediaPlayer.reset();
+//
+//			try {
+//				//this.beatMediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+//				//afd.close();
+//				this.beatMediaPlayer.setDataSource(this.activity.getApplicationContext(), Uri.parse("android.resource://com.my.package/" + R.raw.beat));
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//
+//			if (this.beatCompleted) {
+//				this.beatCompleted = false;
+//				this.beatMediaPlayer.start();
+//			}
+//			else {
+//				this.beatMediaPlayer.prepareAsync();
+//				this.beatMediaPlayer.start();
+//				try {
+//					this.beatMediaPlayer.prepare();
+//					this.beatMediaPlayer.start();
+//				} catch (IOException e) {
+//					System.out.println("nok prepare");
+//					e.printStackTrace();
+//				}
+//			}
+		}
 	}
 	
 	/**
@@ -168,6 +172,20 @@ public class BeatWorker {               // A lot of code is commented out becaus
 		else {
 			this.vibrator.vibrate(Settings.beatVibrationDuration);
 		}
+	}
+	
+	/**
+	 * Mutes the sound of this beat worker.
+	 */
+	public void mute() {
+		this.soundMuted = true;
+	}
+	
+	/**
+	 * Unmutes the sound of this beat worker.
+	 */
+	public void unmute() {
+		this.soundMuted = false;
 	}
 	
 	@Override
